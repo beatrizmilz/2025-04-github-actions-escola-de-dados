@@ -43,40 +43,63 @@ width="25%"}](https://stars.github.com/profiles/beatrizmilz/)</center>
 
 ## {background-color="white" background-image="images/linha-do-tempo.png" background-size="contain"}
 
-
-## Objetivos
-
-
-- Introduzir o conceito de GitHub Actions:
-
-  - Para que serve?
-  
-  - Quais são os pré-requisitos para usar?
-  
-  - Onde buscar mais informações?
+::: {.footer}
+:::
 
 
 ## GitHub Actions
 
-> ### ... nos ajuda a **automatizar tarefas**. ([fonte](https://docs.github.com/pt/actions/learn-github-actions/introduction-to-github-actions))
+- Nos permite **automatizar tarefas** que fazemos com código.
 
-# Conceitos importantes
+- É um serviço da GitHub.
 
-## Trabalhos (jobs)
+## Exemplo de uso: CI e CD
 
-- O trabalho usa etapas para controlar a ordem em que as ações são executadas
+- É principalmente utilizado para tarefas de integração contínua. 
+- Exemplo no contexto de pacotes em R:
+  - executar testes unitários
+  - executar a checagem do pacote
+  - renderizar a página da documentação
+  - entre outros...
+
+## Outros exemplos de uso
+
+- Também conseguimos usar para automatizar tarefas mais simples:
+  - Enviar um email quando o repositório é atualizado
+  - Fazer download de uma tabela todos os dias de manhã
+  - entre outros...
 
 
+## Conceitos importantes
 
+- GitHub Actions nos permite criar **fluxos de trabalho** (workflows).
 
 ## Fluxos de trabalho (workflows)
 
-- Os arquivos `.yaml` que armazenam informações os fluxos de trabalho, onde estão descritos os eventos e trabalhos.
+- Sempre será vinculado à um repositório do GitHub.
+
+- É armazenado em um arquivo `.yaml` dentro da pasta `.github/workflows/` do repositório.
+
+  - Exemplo: `.github/workflows/workflow-name.yaml`
+
+- Precisa da descrição de **Eventos** (o que aciona o fluxo de trabalho) e **Jobs** (o que o fluxo de trabalho deve fazer).
+
+## Estrutura de um workflow
+
+  -   **Eventos (Events)**: descreve o que aciona o fluxo de trabalho. O que deve acontecer para o fluxo de trabalho ser iniciado? 
+
+<br>
+
+  -   **Trabalho (Jobs)**: descreve em qual sistema operacional será executado, e quais **passos (steps)** devem ser executados.
+  
+  <br>
+  
+  - **Passos (Steps)**: Etapas que deverão ser executadas dentro de um trabalho. Cada passo pode executar um comando, ou chamar uma ação (action).
 
 
-## GitHub Actions - Eventos (events)
+## Exemplos de eventos
 
-#### Eventos: Um evento é uma atividade que aciona um fluxo de trabalho. 
+- Um evento é uma atividade que aciona um fluxo de trabalho. 
 
 ```{r echo=FALSE, fig.align='center', out.width="55%"}
 knitr::include_graphics("images/explicacao_eventos.png")
@@ -87,6 +110,22 @@ knitr::include_graphics("images/explicacao_eventos.png")
 Diagrama feito por Beatriz Milz utilizando o site [draw.io](https://draw.io).
 :::
 
+## Exemplo de trabalho
+
+...
+
+## Exemplo de steps
+...
+
+  
+Importante: o que deve acontecer quando o evento ocorrer? Imagine que é um computador novo, sem programas instalados, e precisamos instalar tudo do zero.
+
+
+
+## 
+
+Continuar :)
+
 # Encerramento
 
 ## Materiais para estudar mais: 
@@ -94,6 +133,7 @@ Diagrama feito por Beatriz Milz utilizando o site [draw.io](https://draw.io).
   - [Exemplos de workflows no repositório r-lib/actions](https://github.com/r-lib/actions/tree/master/examples#example-workflows)
 
 
+-   Documentation: <https://docs.github.com/en/actions>
 
 
 
