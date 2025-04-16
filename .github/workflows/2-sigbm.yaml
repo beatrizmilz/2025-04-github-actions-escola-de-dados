@@ -33,7 +33,7 @@ jobs:
           # Define o nome do arquivo com timestamp
           FILENAME="data/sigbm_${DATE}.xlsx"
           # Faz o download do arquivo utilizando curl
-          curl -L "https://app.anm.gov.br/SIGBM/Publico/ClassificacaoNacionalDaBarragem/ExportarExcel" -o "$FILENAME"
+          curl --insecure -L "https://app.anm.gov.br/SIGBM/Publico/ClassificacaoNacionalDaBarragem/ExportarExcel" -o "$FILENAME"
           echo "Arquivo baixado para: $FILENAME"
 
       # Configura o Git e faz commit/push dos arquivos gerados
@@ -42,8 +42,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # Configura o usuário do Git (pode ser ajustado conforme necessidade)
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --global user.email "${{ inputs.GITHUB_EMAIL }}"
+          git config --global user.name "${{ inputs.GITHUB_USERNAME }}"
           # Adiciona os arquivos novos/atualizados
           git add data/
           # Verifica se há alguma modificação para commit
