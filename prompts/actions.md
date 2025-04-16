@@ -20,6 +20,13 @@ O workflow deve incluir os seguintes elementos:
   - Execute a tarefa principal: [Adicione uma etapa para executar o script principal do projeto (por exemplo, `script.py` ou `script.R`).]
   
   - Faça commit e push dos arquivos gerados: Adicione uma etapa para fazer commit e push dos arquivos gerados ou atualizados pelo script para o repositório. 
+  
+  - Quando fizer commit, utilize o seguinte nome e email:
+  
+```
+git config --local user.email "...."
+git config --local user.name "...."
+```  
 
 Siga essas boas práticas:
 

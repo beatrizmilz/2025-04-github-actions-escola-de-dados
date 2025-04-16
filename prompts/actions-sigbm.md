@@ -1,4 +1,4 @@
-Crie um arquivo de workflow (YAML) para o GitHub Actions que automatize o processo de fazer o download de um arquivo excel com os dados diários do SIGBM, e salvar no repositório. O nome do arquivo deve conter uma timestamp com o dia em que foi executado. O arquivo está em: https://app.anm.gov.br/SIGBM/Publico/ClassificacaoNacionalDaBarragem/ExportarExcel . Os arquivos devem ser salvos na pasta "data". 
+Crie um arquivo de workflow (YAML) para o GitHub Actions que automatize o processo de fazer o download de um arquivo excel com os dados diários do SIGBM, e salvar no repositório. O nome do arquivo deve conter uma timestamp com o dia em que foi executado. O arquivo está em: https://app.anm.gov.br/SIGBM/Publico/ClassificacaoNacionalDaBarragem/ExportarExcel . Os arquivos devem ser salvos na pasta "data". O método de download deve ser POST.
 
 O workflow deve incluir os seguintes elementos:
 
@@ -15,6 +15,13 @@ O workflow deve incluir os seguintes elementos:
   - Execute tarefa principal: a etapa de download dos dados usando a linha de comando.
   
   - Faça commit e push dos arquivos gerados: Adicione uma etapa para fazer commit e push dos arquivos gerados ou atualizados pelo script para o repositório. 
+  
+  - Quando fizer commit, utilize o seguinte nome e email:
+  
+```
+git config --local user.email "...."
+git config --local user.name "...."
+```  
 
 Siga essas boas práticas:
 
