@@ -1,10 +1,10 @@
 name: download-sigbm  # Nome descritivo do workflow
 
 on:
-  # Executa o workflow via agendamento: todos os dias às 08h (horário de Brasília é UTC-3, então 11h UTC)
+  # Agendamento para execução diária às 08h (horário de Brasília = UTC-3, logo 11h UTC)
   schedule:
     - cron: '0 11 * * *'
-  # Permite execução manual pelo botão "Run workflow"
+  # Permite execução manual através da interface do GitHub
   workflow_dispatch:
 
 jobs:
@@ -16,40 +16,38 @@ jobs:
       - name: Checkout do repositório
         uses: actions/checkout@v2
         with:
-          # O token padrão GITHUB_TOKEN já possui permissão de escrita mínima; se necessário,
-          # configure permissões adicionais no arquivo de configuração do repositório.
           token: ${{ secrets.GITHUB_TOKEN }}
-
+      
       # Cria a pasta "data" caso não exista
       - name: Criar pasta data
-        run: |
-          mkdir -p data
+        run: mkdir -p data
 
-      # Baixa o arquivo Excel do SIGBM e salva com timestamp no nome
-      - name: Baixar arquivo Excel do SIGBM
+      # Faz o download do arquivo Excel via POST e salva com timestamp no nome
+      - name: Baixar arquivo Excel do SIGBM via POST
         run: |
-          # Define a variável com a data atual no formato AAAA-MM-DD
+          # Define a data atual no formato AAAA-MM-DD
           DATE=$(date +"%Y-%m-%d")
-          # Define o nome do arquivo com timestamp
+          # Define o nome do arquivo incluindo a data
           FILENAME="data/sigbm_${DATE}.xlsx"
-          # Faz o download do arquivo utilizando curl
-          curl --insecure -L "https://app.anm.gov.br/SIGBM/Publico/ClassificacaoNacionalDaBarragem/ExportarExcel" -o "$FILENAME"
-          echo "Arquivo baixado para: $FILENAME"
+          # Executa o download via método POST com curl e salva o arquivo na pasta data
+          curl -X POST "https://app.anm.gov.br/SIGBM/Publico/ClassificacaoNacionalDaBarragem/ExportarExcel" -o "$FILENAME"
+          echo "Arquivo baixado em: $FILENAME"
 
-      # Configura o Git e faz commit/push dos arquivos gerados
-      - name: Commit e Push do arquivo baixado
+      # Configura o Git, faz commit e push dos arquivos atualizados
+      - name: Commit e Push dos arquivos
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # Configura o usuário do Git (pode ser ajustado conforme necessidade)
+          # Configura o nome e email para o commit conforme solicitado
           git config --local user.email "milz.bea@gmail.com"
           git config --local user.name "Beatriz Milz"
-          # Adiciona os arquivos novos/atualizados
+          # Adiciona os arquivos da pasta data
           git add data/
-          # Verifica se há alguma modificação para commit
+          # Verifica se há mudanças a serem commitadas
           if git diff --staged --quiet; then
-            echo "Nenhuma mudança a ser commitada."
+            echo "Sem alterações para commit."
           else
-            git commit -m "Adicionar/Atualizar arquivo Excel SIGBM - $(date +"%Y-%m-%d")"
+            # Cria commit com mensagem e data atual
+            git commit -m "Atualiza arquivo Excel SIGBM - $(date +"%Y-%m-%d")"
             git push
           fi
