@@ -42,8 +42,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # Configura o usuário do Git (pode ser ajustado conforme necessidade)
-          git config --local user.email "actions@github.com"
-          git config --local user.name "GitHub Actions"
+          git config --local user.email "milz.bea@gmail.com"
+          git config --local user.name "Beatriz Milz"
           # Adiciona os arquivos novos/atualizados
           git add data/
           # Verifica se há alguma modificação para commit
