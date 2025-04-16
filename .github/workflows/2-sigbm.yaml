@@ -1,0 +1,55 @@
+name: download-sigbm  # Nome descritivo do workflow
+
+on:
+  # Executa o workflow via agendamento: todos os dias às 08h (horário de Brasília é UTC-3, então 11h UTC)
+  schedule:
+    - cron: '0 11 * * *'
+  # Permite execução manual pelo botão "Run workflow"
+  workflow_dispatch:
+
+jobs:
+  download_excel:
+    runs-on: ubuntu-latest  # Ambiente Linux
+
+    steps:
+      # Faz o checkout do repositório
+      - name: Checkout do repositório
+        uses: actions/checkout@v2
+        with:
+          # O token padrão GITHUB_TOKEN já possui permissão de escrita mínima; se necessário,
+          # configure permissões adicionais no arquivo de configuração do repositório.
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      # Cria a pasta "data" caso não exista
+      - name: Criar pasta data
+        run: |
+          mkdir -p data
+
+      # Baixa o arquivo Excel do SIGBM e salva com timestamp no nome
+      - name: Baixar arquivo Excel do SIGBM
+        run: |
+          # Define a variável com a data atual no formato AAAA-MM-DD
+          DATE=$(date +"%Y-%m-%d")
+          # Define o nome do arquivo com timestamp
+          FILENAME="data/sigbm_${DATE}.xlsx"
+          # Faz o download do arquivo utilizando curl
+          curl -L "https://app.anm.gov.br/SIGBM/Publico/ClassificacaoNacionalDaBarragem/ExportarExcel" -o "$FILENAME"
+          echo "Arquivo baixado para: $FILENAME"
+
+      # Configura o Git e faz commit/push dos arquivos gerados
+      - name: Commit e Push do arquivo baixado
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Configura o usuário do Git (pode ser ajustado conforme necessidade)
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # Adiciona os arquivos novos/atualizados
+          git add data/
+          # Verifica se há alguma modificação para commit
+          if git diff --staged --quiet; then
+            echo "Nenhuma mudança a ser commitada."
+          else
+            git commit -m "Adicionar/Atualizar arquivo Excel SIGBM - $(date +"%Y-%m-%d")"
+            git push
+          fi
