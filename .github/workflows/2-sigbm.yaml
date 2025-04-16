@@ -30,7 +30,7 @@ jobs:
           # Define o nome do arquivo incluindo a data
           FILENAME="data/sigbm_${DATE}.xlsx"
           # Executa o download via método POST com curl e salva o arquivo na pasta data
-          curl --insecure -X POST "https://app.anm.gov.br/SIGBM/Publico/ClassificacaoNacionalDaBarragem/ExportarExcel" -o "$FILENAME"
+          curl --insecure -X POST -d "" "https://app.anm.gov.br/SIGBM/Publico/ClassificacaoNacionalDaBarragem/ExportarExcel" -o "$FILENAME"
           echo "Arquivo baixado em: $FILENAME"
 
       # Configura o Git, faz commit e push dos arquivos atualizados
