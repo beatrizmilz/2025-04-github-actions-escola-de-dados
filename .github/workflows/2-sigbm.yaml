@@ -1,53 +1,39 @@
-name: download-sigbm  # Nome descritivo do workflow
+# .github/workflows/download-sigbm-data.yml
+
+name: Download SIGBM Data            # Nome descritivo do workflow
 
 on:
-  # Agendamento para execução diária às 08h (horário de Brasília = UTC-3, logo 11h UTC)
   schedule:
-    - cron: '0 11 * * *'
-  # Permite execução manual através da interface do GitHub
-  workflow_dispatch:
+    - cron: '0 12 * * *'             # 12:00 UTC corresponde a 09:00 BRT
+  workflow_dispatch:                 # Permite disparo manual
+
+permissions:
+  contents: write                    # Permissão mínima para commitar e push
 
 jobs:
-  download_excel:
-    runs-on: ubuntu-latest  # Ambiente Linux
+  download:
+    runs-on: ubuntu-latest           # Ambiente Linux mais recente
 
     steps:
-      # Faz o checkout do repositório
-      - name: Checkout do repositório
+      - name: Checkout repository
         uses: actions/checkout@v2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-      
-      # Cria a pasta "data" caso não exista
-      - name: Criar pasta data
-        run: mkdir -p data
 
-      # Faz o download do arquivo Excel via POST e salva com timestamp no nome
-      - name: Baixar arquivo Excel do SIGBM via POST
+      - name: Download Excel from SIGBM API
         run: |
-          # Define a data atual no formato AAAA-MM-DD
-          DATE=$(date +"%Y-%m-%d")
-          # Define o nome do arquivo incluindo a data
-          FILENAME="data/sigbm_${DATE}.xlsx"
-          # Executa o download via método POST com curl e salva o arquivo na pasta data
-          curl --insecure -X POST -d "" "https://app.anm.gov.br/SIGBM/Publico/ClassificacaoNacionalDaBarragem/ExportarExcel" -o "$FILENAME"
-          echo "Arquivo baixado em: $FILENAME"
+          mkdir -p data
+          today=$(date -u +'%Y-%m-%d')                # Apenas data (YYYY-MM-DD)
+          curl --insecure -X POST --data '' "https://app.anm.gov.br/SIGBM/Publico/ClassificacaoNacionalDaBarragem/ExportarExcel" \
+            -o data/sigbm_${today}.xlsx
 
-      # Configura o Git, faz commit e push dos arquivos atualizados
-      - name: Commit e Push dos arquivos
+      - name: Configure Git
+        run: |
+          git config --local user.email "milz.bea@gmail.com"
+          git config --local user.name "Beatriz Milz"
+
+      - name: Commit and Push changes
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # Configura o nome e email para o commit conforme solicitado
-          git config --local user.email "milz.bea@gmail.com"
-          git config --local user.name "Beatriz Milz"
-          # Adiciona os arquivos da pasta data
           git add data/
-          # Verifica se há mudanças a serem commitadas
-          if git diff --staged --quiet; then
-            echo "Sem alterações para commit."
-          else
-            # Cria commit com mensagem e data atual
-            git commit -m "Atualiza arquivo Excel SIGBM - $(date +"%Y-%m-%d")"
-            git push
-          fi
+          git commit -m "chore: download SIGBM data on ${today}"
+          git push
