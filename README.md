@@ -4,7 +4,7 @@ Materiais utilizados no webinar "Automatize tarefas com GitHub Actions: Primeiro
 
 ## Materiais
 
-- [Slides](https://www.canva.com/design/DAGkzIv8-og/f_HNMAF6MYzA6Bcs_-Kirg/edit?utm_content=DAGkzIv8-og&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
+- Slides: [Canva](https://www.canva.com/design/DAGkzIv8-og/f_HNMAF6MYzA6Bcs_-Kirg/edit?utm_content=DAGkzIv8-og&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton) e [PDF](https://github.com/beatrizmilz/2025-04-github-actions-escola-de-dados/tree/main/slides.pdf)
 
 - [Scripts](https://github.com/beatrizmilz/2025-04-github-actions-escola-de-dados/tree/main/.github/workflows)
 
@@ -28,6 +28,16 @@ Materiais utilizados no webinar "Automatize tarefas com GitHub Actions: Primeiro
 
 - [GitHub Actions for the R language](https://github.com/r-lib/actions), para quem usa R.
 
+- [GitHub Actions for Quarto](https://github.com/quarto-dev/quarto-actions)
+
+- [GitHub Actions Marketplace](https://github.com/marketplace?verification=verified_creator&type=actions)
+
+### Outros
+
+- [Webinar Escola de Dados: Como descobrir APIs escondidas para facilitar a raspagem de dados](https://escoladedados.org/webinar/como-descobrir-apis-escondidas-para-facilitar-a-raspagem-de-dados/)
+
+- [crontab guru - ferramenta para criar o texto para  do `schedule`](https://crontab.guru/)
+
 ## Exemplos de projetos que usam GitHub Actions
 
 - [Bash] [`beatrizmilz/sigbm`- Download das tabelas do SIGBM](https://github.com/beatrizmilz/sigbm/blob/main/.github/workflows/download-sigbm.yaml)
@@ -36,6 +46,8 @@ Materiais utilizados no webinar "Automatize tarefas com GitHub Actions: Primeiro
 
 
 - [R] [`beatrizmilz/iptgrh_scraper`- Faz download de páginas HTML](https://github.com/beatrizmilz/iptgrh_scraper/blob/master/.github/workflows/executar-script-download-html.yaml)
+
+- [R + Quarto] [`ipeadata-lab/curso_r_intro_202409` - Renderiza o livro em Quarto sempre que o repositório é atualizado](https://github.com/ipeadata-lab/curso_r_intro_202409/blob/main/.github/workflows/quarto-render.yaml)
 
 
 Alguns que estão quebrados, e preciso arrumar:
