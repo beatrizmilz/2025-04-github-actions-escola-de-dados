@@ -1,4 +1,4 @@
-## Prompt para Criar Workflow GitHub Actions
+## Template de prompt para criar um workflow GitHub Actions
 
 Crie um arquivo de workflow (YAML) para o GitHub Actions que automatize o processo de [.......]. 
 
@@ -37,3 +37,7 @@ Siga essas boas práticas:
 - O workflow deve seguir as melhores práticas da documentação oficial do GitHub Actions: https://docs.github.com/pt/actions
 
 - Caso o workflow utilize R, utilize as actions já preparadas no repositório https://github.com/r-lib/actions.
+
+- Caso o workflow utilize Quarto, utilize as actions já preparadas no repositório https://github.com/quarto-dev/quarto-actions.
+
+- Quando possível, utilize ações já existentes no GitHub Marketplace, e dê preferência para ações de criadores verificados: https://github.com/marketplace?verification=verified_creator&type=actions
